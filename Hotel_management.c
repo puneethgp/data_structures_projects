@@ -1,5 +1,4 @@
-// hotel order management using data structures in c
-// here we are using stack data structures implemented on linkedlist
+
 
 #include<stdio.h>
 #include<conio.h>
@@ -14,11 +13,10 @@ struct Order
     int price;
     struct Order* next;
 };
-
 struct Order* head ;
 char items[8][3][25]= {{"1"," BURGER","45"},{"2", "SAMOSA","10"},{"3", "PIZZA","60"},{"4","VADA PAV","10"},{"5", "COLD COFFEE","45"},{"6", "MILKSHAKE","45"},{"7","TEA","10"}};
 
-// converting string number to integers
+
 int ATOI(char* num)
 {
     int result=0;
@@ -27,7 +25,7 @@ int ATOI(char* num)
     return result;
 }
 
-// creating new node to save details of order
+
 struct Order* Get_Order(int item_number)
 {
     struct Order* temp = (struct Order*)malloc(sizeof(struct Order));
@@ -39,7 +37,6 @@ struct Order* Get_Order(int item_number)
     return temp;
 };
 
-// adding elements to stack ->adding elements at the end of linkedlist
 void Push(int item_number)
 {
     struct Order* temp = Get_Order(item_number);
@@ -121,6 +118,7 @@ void Menu()
 
 void Main_menu( )
 {
+    printf("\n----Options avaliable----\n");
     printf("\nOrder food		   	press 1\n");
     printf("Delete orderd food	   	press 2\n");
     printf("Display order		   	press 3\n");
@@ -146,10 +144,14 @@ int main()
         switch(choice)
         {
         case 1:
+            while(1){
             Menu();
             printf("Order an item from the Menu : ");
             scanf("%d",&item);
+            if (item==0) break;
             Push(item);
+            printf("to exit press 0\n");
+            }
             break;
 
         case 2:
