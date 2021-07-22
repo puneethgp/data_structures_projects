@@ -1,4 +1,6 @@
 
+// hotel order management using data structures in c
+// here we are using stack data structures implemented on linkedlist
 
 #include<stdio.h>
 #include<conio.h>
@@ -13,10 +15,11 @@ struct Order
     int price;
     struct Order* next;
 };
+
 struct Order* head ;
 char items[8][3][25]= {{"1"," BURGER","45"},{"2", "SAMOSA","10"},{"3", "PIZZA","60"},{"4","VADA PAV","10"},{"5", "COLD COFFEE","45"},{"6", "MILKSHAKE","45"},{"7","TEA","10"}};
 
-
+// converting string number to integers
 int ATOI(char* num)
 {
     int result=0;
@@ -25,7 +28,7 @@ int ATOI(char* num)
     return result;
 }
 
-
+// creating new node to save details of order
 struct Order* Get_Order(int item_number)
 {
     struct Order* temp = (struct Order*)malloc(sizeof(struct Order));
@@ -37,18 +40,12 @@ struct Order* Get_Order(int item_number)
     return temp;
 };
 
+// adding elements to stack ->adding elements at the beginnig of linkedlist
 void Push(int item_number)
 {
     struct Order* temp = Get_Order(item_number);
-    if (head == NULL)
-        head = temp;
-    else
-    {
-        struct Order* q=head;
-        while (q->next!=NULL)
-            q=q->next;
-        q->next= temp;
-    }
+    temp ->next = head;
+    head = temp;
 }
 
 void Pop(int item)
@@ -60,16 +57,22 @@ void Pop(int item)
         printf("You have no orders to delete\n ");
         return ;
     }
-    while(temp1->next->food_item_number!=item)
+    if (temp1->food_item_number==item)
     {
-        temp1= temp1->next;
+        head = temp1->next;
+        printf("\nremoved %s from your order\n",temp1->food_name);
+        free(temp1);
+        return;
     }
+    while(temp1->next->food_item_number!=item)
+        temp1= temp1->next;
     struct Order* temp2 =temp1->next;
-    printf("\nremoved %s from your order\n",temp1->next->food_name);
+    printf("\nremoved %s from your order\n",temp1->food_name);
     temp1->next = temp1->next->next;
     free(temp2);
 }
 
+// recently ordered item will be showed first
 void Display_order()
 {
     struct Order* temp = head ;
@@ -82,7 +85,7 @@ void Display_order()
     printf("NUM  NAME			PRICE\n");
     while (temp!=NULL)
     {
-        printf("%d   %s			%d\n",temp->food_item_number,temp->food_name,temp->price);
+        printf("%d   %10s			%d\n",temp->food_item_number,temp->food_name,temp->price);
         temp= temp->next;
     }
 }
@@ -106,18 +109,19 @@ int Bill()
 
 void Menu()
 {
-    printf("\n.......Select The Food From list.......\n\n");
+    printf(".......Select The Food From list.......\n\n");
     printf("1 BURGER			|Rs 45|\n");
     printf("2 SAMOSA			|Rs 10|\n");
     printf("3 PIZZA				|Rs 60|\n");
     printf("4 VADA PAV			|Rs 10|\n");
-    printf("5 COLD COFFEE			|Rs 45|\n");
+    printf("5 COLD COFFEE	                |Rs 45|\n");
     printf("6 MILKSHAKE			|Rs 45|\n");
     printf("7 TEA				|Rs 10|\n");
 }
 
 void Main_menu( )
 {
+
     printf("\n----Options avaliable----\n");
     printf("\nOrder food		   	press 1\n");
     printf("Delete orderd food	   	press 2\n");
@@ -144,20 +148,25 @@ int main()
         switch(choice)
         {
         case 1:
-            while(1){
-            Menu();
-            printf("Order an item from the Menu : ");
-            scanf("%d",&item);
-            if (item==0) break;
-            Push(item);
-            printf("to exit press 0\n");
+            while(1)
+            {
+                Menu();
+                printf("Order an item from the Menu : ");
+                scanf("%d",&item);
+                if (item==0) break;
+                Push(item);
+                printf("to exit press 0\n");
             }
             break;
 
         case 2:
             Menu();
+            printf("Press '0' to return to main menu\n");
+            printf("To remove recent order presss 8\n");
             printf("Enter  item_number to remove from the order\n");
             scanf("%d",&item);
+            if (item==0) break;
+            if (item==8) Pop(head->food_item_number);
             Pop(item);
             break;
 
@@ -180,4 +189,3 @@ int main()
     while(1);
     printf("\nHappy eating\n");
 }
-
