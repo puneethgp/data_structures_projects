@@ -106,7 +106,7 @@ int Bill()
 
 void Menu()
 {
-    printf(".......Select The Food From list.......\n\n");
+    printf("\n.......Select The Food From list.......\n\n");
     printf("1 BURGER			|Rs 45|\n");
     printf("2 SAMOSA			|Rs 10|\n");
     printf("3 PIZZA				|Rs 60|\n");
